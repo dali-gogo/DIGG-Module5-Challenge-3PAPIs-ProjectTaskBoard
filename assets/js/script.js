@@ -9,6 +9,12 @@ let tasksList = JSON.parse(localStorage.getItem("tasksList")) || [];
 let submitButton = document.getElementById('submitButton');
 let cancelButton = document.getElementById('cancelButton');
 
+let taskEl = $('#taskModal');
+let taskName = $('#taskName');
+let taskDate = $('#datepicker');
+let taskDescription = $('#taskDescription');
+let tasksDisplayEl = $('#tasksDisplay');
+
 $(function () {
     $('#datepicker').datepicker({
       changeMonth: true,
@@ -53,57 +59,49 @@ taskModal.style.display = 'none';
 }
 
 // // Todo: create a function to create a task card
-// function createTaskCard(task) {
+// function createTaskCard(task) {}
 
+function createTaskCard(task) {
+    const cardColumnEl = $('<div>');
+    cardColumnEl.addClass('col-12 col-sm-4 col-md-3');
 
-const formEl = $('#guestbook-form');
-const nameInputEl = $('#name-input');
-const commentInputEl = $('#comment-input');
-const guestBookDisplayEl = $('#guest-book-display');
-
-const printGuestData = function (name, comment) {
-  const cardColumnEl = $('<div>');
-  cardColumnEl.addClass('col-12 col-sm-4 col-md-3');
-
-  const cardEl = $('<div>');
+const cardEl = $('<div>');
   // Add a class of .custom-card
   cardEl.addClass('card h-100 custom-card');
   cardEl.appendTo(cardColumnEl);
 
   // Add a class of .custom-card-header
-  const cardName = $('<h5>').addClass('card-header custom-card-header').text(name);
+  const cardName = $('<h5>').addClass('card-header custom-card-header').text(task);
   cardName.appendTo(cardEl);
 
   const cardBodyEl = $('<div>');
   cardBodyEl.addClass('card-body');
   cardBodyEl.appendTo(cardEl);
 
-  const cardComment = $('<p>').addClass('card-text').text(comment);
+  const cardComment = $('<p>').addClass('card-text').text(task);
   cardComment.appendTo(cardBodyEl);
 
-  guestBookDisplayEl.append(cardColumnEl);
-};
+  tasksDisplayEl.append(cardColumnEl);
 
-const handleFormSubmit = function (event) {
+}
+
+  const handleFormSubmit = function (event) {
   event.preventDefault();
 
-  const nameInput = nameInputEl.val();
-  const commentInput = commentInputEl.val();
+  const taskName = taskName.val();
+  const taskDate = taskDate.val();
+  const taskDescription = taskDescription.val();
 
-  if (!nameInput || !commentInput) {
-    console.log('You need to fill out the form!');
-    return;
-  }
-
-  printGuestData(nameInput, commentInput);
+  printGuestData(taskName, taskDate, taskDescription);
 
   // reset form
-  nameInputEl.val('');
-  commentInputEl.val('');
+  taskName.val('');
+  taskDate.val('');
+  taskName.val('');
+  taskDescription.val('');
 };
 
-formEl.on('submit', handleFormSubmit);
-
+taskEl.on('submit', handleFormSubmit);
 
 // }
 
