@@ -5,13 +5,13 @@ let taskDescription = $('#taskDescription');
 let tasksDisplayEl = $('#tasksDisplay');
 
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+// let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 let tasksInputs = document.querySelector('#tasksInputs');
 
 let button = document.getElementById('button');
 let taskModal = document.getElementById('taskModal');
-let tasksList = JSON.parse(localStorage.getItem("tasksList")) || [];
+// let tasksList = JSON.parse(localStorage.getItem("tasksList")) || [];
 let submitButton = document.getElementById('submitButton');
 let cancelButton = document.getElementById('cancelButton');
 
@@ -38,17 +38,17 @@ function generateTaskId (event) {
     let taskDescription = document.querySelector("#taskDescription").value;
 
     if(taskName !== '' && taskDate !== '' && taskDescription !== ''){
-      
+     const tasksList = []; 
         tasksList.push({
             taskName:taskName,
-            datePicker:taskDate,
+            datepicker:taskDate,
             taskDescription:taskDescription,
         })
 
         localStorage.setItem("tasksList",JSON.stringify(tasksList));
-        document.querySelector("#taskName").value = '';
-        document.querySelector("#datepicker").value = '';
-        document.querySelector("#taskDescription").value = '';
+        // taskName = '';
+        // taskDate= '';
+        // taskDescription = '';
         taskModal.style.display = 'none';
         rendertasksList();
       }
@@ -96,10 +96,10 @@ const cardEl = $('<div>');
   createTaskCard(taskName, taskDate, taskDescription);
 
   // reset form
-  taskName.val('');
-  taskDate.val('');
-  taskName.val('');
-  taskDescription.val('');
+  // taskName.val('');
+  // taskDate.val('');
+  // taskName.val('');
+  // taskDescription.val('');
 };
 
 
