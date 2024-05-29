@@ -1,19 +1,23 @@
-let taskEl = $('#taskModal');
-let taskName = $('#taskName');
-let taskDate = $('#datepicker');
-let taskDescription = $('#taskDescription');
-let tasksDisplayEl = $('#tasksDisplay');
+// let taskEl = $('#taskModal');
+// let taskName = $('#taskName');
+// let taskDate = $('#datepicker');
+// let taskDescription = $('#taskDescription');
+// let tasksDisplayEl = $('#tasksDisplay');
 
 // Retrieve tasks and nextId from localStorage
 // let taskList = JSON.parse(localStorage.getItem("tasks"));
-let nextId = JSON.parse(localStorage.getItem("nextId"));
-let tasksInputs = document.querySelector('#tasksInputs');
+// let nextId = JSON.parse(localStorage.getItem("nextId"));
+// let tasksInputs = document.querySelector('#tasksInputs');
 
-let button = document.getElementById('button');
-let taskModal = document.getElementById('taskModal');
+// let button = document.getElementById('button');
+// let taskModal = document.getElementById('taskModal');
 // let tasksList = JSON.parse(localStorage.getItem("tasksList")) || [];
-let submitButton = document.getElementById('submitButton');
-let cancelButton = document.getElementById('cancelButton');
+const submitButton = document.querySelector("#submitButton");
+const taskName = document.querySelector("#taskName");
+const taskDate = document.querySelector("#datepicker");
+const taskDescription = document.querySelector("#taskDescription");
+
+// let cancelButton = document.getElementById('cancelButton');
 
 
 $(function () {
@@ -30,108 +34,104 @@ $(function () {
 
 // submitButton.onclick = 
 
-function generateTaskId (event) {
-    console.log();
-    event.preventDefault();
-    let taskName = document.querySelector("#taskName").value;
-    let taskDate = document.querySelector("#datepicker").value;
-    let taskDescription = document.querySelector("#taskDescription").value;
+submitButton.addEventListener('click', function () {
+  const taskNameValue = taskName.value;
+  const taskDateValue = taskDate.value;
+  const taskDescriptionValue = taskDescription.value;
 
-    if(taskName !== '' && taskDate !== '' && taskDescription !== ''){
-     const tasksList = []; 
-        tasksList.push({
-            taskName:taskName,
-            datepicker:taskDate,
-            taskDescription:taskDescription,
-        })
-
-        localStorage.setItem("tasksList",JSON.stringify(tasksList));
-        // taskName = '';
-        // taskDate= '';
-        // taskDescription = '';
-        taskModal.style.display = 'none';
-        rendertasksList();
+  if(taskName !== '' && taskDate !== '' && taskDescription !== ''){
+    const tasksList = {
+          taskName:taskNameValue,
+          datepicker:taskDateValue,
+          taskDescription:taskDescriptionValue,
       }
-  
-  }
-  
-cancelButton.onclick = function () {
-taskModal.style.display = 'none';
+
+      let tasksListArr = JSON.parse(localStorage.getItem("tasksList")) || [];
+      tasksListArr.push(
+        tasksList
+      )
+      localStorage.setItem("tasksList",JSON.stringify(tasksListArr));
+      rendertasksList();
+    }
 }
+  
+// cancelButton.onclick = function () {
+// taskModal.style.display = 'none';
+// }
 
 // // Todo: create a function to create a task card
-// function createTaskCard(task) {}
+// // function createTaskCard(task) {}
 
-function createTaskCard(task) {
-    const cardColumnEl = $('<#todo-cards>');
-    cardColumnEl.addClass('col-12 col-sm-4 col-md-3');
+// function createTaskCard(task) {
+//     const cardColumnEl = $('<#todo-cards>');
+//     cardColumnEl.addClass('col-12 col-sm-4 col-md-3');
 
-const cardEl = $('<div>');
-  // Add a class of .custom-card
-  cardEl.addClass('card h-100 custom-card');
-  cardEl.appendTo(cardColumnEl);
+// const cardEl = $('<div>');
+//   // Add a class of .custom-card
+//   cardEl.addClass('card h-100 custom-card');
+//   cardEl.appendTo(cardColumnEl);
 
-  // Add a class of .custom-card-header
-  const cardName = $('<h5>').addClass('card-header custom-card-header').text(task);
-  cardName.appendTo(cardEl);
+//   // Add a class of .custom-card-header
+//   const cardName = $('<h5>').addClass('card-header custom-card-header').text(task);
+//   cardName.appendTo(cardEl);
 
-  const cardBodyEl = $('<div>');
-  cardBodyEl.addClass('card-body');
-  cardBodyEl.appendTo(cardEl);
+//   const cardBodyEl = $('<div>');
+//   cardBodyEl.addClass('card-body');
+//   cardBodyEl.appendTo(cardEl);
 
-  const cardComment = $('<p>').addClass('card-text').text(task);
-  cardComment.appendTo(cardBodyEl);
+//   const cardComment = $('<p>').addClass('card-text').text(task);
+//   cardComment.appendTo(cardBodyEl);
 
-  tasksDisplayEl.append(cardColumnEl);
+//   tasksDisplayEl.append(cardColumnEl);
 
-}
+// }
 
-  const handleFormSubmit = function (event) {
-  event.preventDefault();
+//   const handleFormSubmit = function (event) {
+//   event.preventDefault();
 
-  const taskName = taskName.val();
-  const taskDate = taskDate.val();
-  const taskDescription = taskDescription.val();
+//   const taskName = taskName.val();
+//   const taskDate = taskDate.val();
+//   const taskDescription = taskDescription.val();
 
-  createTaskCard(taskName, taskDate, taskDescription);
+//   createTaskCard(taskName, taskDate, taskDescription);
 
-  // reset form
-  // taskName.val('');
-  // taskDate.val('');
-  // taskName.val('');
-  // taskDescription.val('');
-};
+//   // reset form
+//   // taskName.val('');
+//   // taskDate.val('');
+//   // taskName.val('');
+//   // taskDescription.val('');
+// };
 
 
 // }
 
 // Todo: create a function to render the task list and make cards draggable
-function rendertasksList() {
-  handleDeleteTask();
-  const tasksList = JSON.parse(localStorage.getItem('currentTasks'));
-  for (let tasksList_i of tasksList) {
-    const taskCard = document.createElement('div');
-    const taskNameCard = document.createElement('h3');
-    const taskDateCard = document.createElement('p');
-    const taskDescriptionCard = document.createElement('p');
+// function rendertasksList() {
+//   handleDeleteTask();
+//   const tasksList = JSON.parse(localStorage.getItem('currentTasks'));
+//   for (let tasksList_i of tasksList) {
+//     const taskCard = document.createElement('div');
+//     const taskNameCard = document.createElement('h3');
+//     const taskDateCard = document.createElement('p');
+//     const taskDescriptionCard = document.createElement('p');
     
-    taskCard.setAttribute('class', 'card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
+//     taskCard.setAttribute('class', 'card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
     
-    taskNameCard.setAttribute('class', 'content mx-5');
-    taskNameCard.textContent = tasksList_i.taskName;
+//     taskNameCard.setAttribute('class', 'content mx-5');
+//     taskNameCard.textContent = tasksList_i.taskName;
     
-    taskDateCard.setAttribute('class', 'content mx-4');
-    taskDateCard.textContent = tasksList_i.datepicker;
+//     taskDateCard.setAttribute('class', 'content mx-4');
+//     taskDateCard.textContent = tasksList_i.datepicker;
     
-    taskDescriptionCard.setAttribute('class', 'content mx-4');
-    taskDescriptionCard.textContent = tasksList_i.taskDescription;
+//     taskDescriptionCard.setAttribute('class', 'content mx-4');
+//     taskDescriptionCard.textContent = tasksList_i.taskDescription;
     
-    reviewContainer.appendChild(taskNameCard);
-    reviewContainer.appendChild(taskDateCard);
-    reviewContainer.appendChild(taskDescriptionCard);
-    tasksInputs.appendChild(taskCard);
-  }
-}
+//     reviewContainer.appendChild(taskNameCard);
+//     reviewContainer.appendChild(taskDateCard);
+//     reviewContainer.appendChild(taskDescriptionCard);
+//     tasksInputs.appendChild(taskCard);
+//   }
+// }
 
 
 // Todo: create a function to handle adding a new task
@@ -165,10 +165,10 @@ function rendertasksList() {
         // // Todo: create a function to handle deleting a task
         // function handleDeleteTask(event){
           
-          function handleDeleteTask(event){
-            const btnClicked = $(event.target);
-            btnClicked.parent('li').remove();
-          }
+          // function handleDeleteTask(event){
+          //   const btnClicked = $(event.target);
+          //   btnClicked.parent('li').remove();
+          // }
           
           // }
           
@@ -182,4 +182,4 @@ function rendertasksList() {
               
               // });
 
-taskEl.on('submit', handleFormSubmit);
+// taskEl.on('submit', handleFormSubmit);
