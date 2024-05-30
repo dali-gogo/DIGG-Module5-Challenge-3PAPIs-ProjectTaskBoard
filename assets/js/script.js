@@ -7,7 +7,7 @@
 // Retrieve tasks and nextId from localStorage
 // let taskList = JSON.parse(localStorage.getItem("tasks"));
 // let nextId = JSON.parse(localStorage.getItem("nextId"));
-// let tasksInputs = document.querySelector('#tasksInputs');
+let tasksInputs = document.querySelector('#tasksInputs');
 
 // let button = document.getElementById('button');
 // let taskModal = document.getElementById('taskModal');
@@ -53,7 +53,7 @@ submitButton.addEventListener('click', function () {
       localStorage.setItem("tasksList",JSON.stringify(tasksListArr));
       rendertasksList();
     }
-}
+})
   
 // cancelButton.onclick = function () {
 // taskModal.style.display = 'none';
@@ -106,33 +106,34 @@ submitButton.addEventListener('click', function () {
 // }
 
 // Todo: create a function to render the task list and make cards draggable
-// function rendertasksList() {
-//   handleDeleteTask();
-//   const tasksList = JSON.parse(localStorage.getItem('currentTasks'));
-//   for (let tasksList_i of tasksList) {
-//     const taskCard = document.createElement('div');
-//     const taskNameCard = document.createElement('h3');
-//     const taskDateCard = document.createElement('p');
-//     const taskDescriptionCard = document.createElement('p');
+function rendertasksList() {
+  // handleDeleteTask();
+  const tasksList = JSON.parse(localStorage.getItem('tasksList'));
+  console.log(tasksList);
+  for (let tasksList_i of tasksList) {
+    const taskCard = document.createElement('div');
+    const taskNameCard = document.createElement('h3');
+    const taskDateCard = document.createElement('p');
+    const taskDescriptionCard = document.createElement('p');
     
-//     taskCard.setAttribute('class', 'card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
+    taskCard.setAttribute('class', 'draggable card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
     
-//     taskNameCard.setAttribute('class', 'content mx-5');
-//     taskNameCard.textContent = tasksList_i.taskName;
+    taskNameCard.setAttribute('class', 'content mx-5');
+    taskNameCard.textContent = tasksList_i.taskName;
     
-//     taskDateCard.setAttribute('class', 'content mx-4');
-//     taskDateCard.textContent = tasksList_i.datepicker;
+    taskDateCard.setAttribute('class', 'content mx-4');
+    taskDateCard.textContent = tasksList_i.datepicker;
     
-//     taskDescriptionCard.setAttribute('class', 'content mx-4');
-//     taskDescriptionCard.textContent = tasksList_i.taskDescription;
+    taskDescriptionCard.setAttribute('class', 'content mx-4');
+    taskDescriptionCard.textContent = tasksList_i.taskDescription;
     
-//     reviewContainer.appendChild(taskNameCard);
-//     reviewContainer.appendChild(taskDateCard);
-//     reviewContainer.appendChild(taskDescriptionCard);
-//     tasksInputs.appendChild(taskCard);
-//   }
-// }
-
+    const reviewContainer = document.querySelector('#todo-cards');
+    taskCard.appendChild(taskNameCard);
+    taskCard.appendChild(taskDateCard);
+    taskCard.appendChild(taskDescriptionCard);
+    reviewContainer.appendChild(taskCard);
+  }
+}
 
 // Todo: create a function to handle adding a new task
 
@@ -178,8 +179,9 @@ submitButton.addEventListener('click', function () {
             // }
             
             // // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-            // $(document).ready(function () {
-              
-              // });
+        $(document).ready(function () {
+          rendertasksList();
+          $(".draggable").draggable();
+          });
 
 // taskEl.on('submit', handleFormSubmit);
