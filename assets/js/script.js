@@ -24,12 +24,15 @@ $(function () {
     $('#datepicker').datepicker({
       changeMonth: true,
       changeYear: true,
+      // dateFormat: 'MM-DD-YYY',
     });
   });
 
 
 // Todo: create a function to generate a unique task id
 // function generateTaskId() {
+  // id: math floor random, random numbers
+  // local storage, save id
 // }
 
 // submitButton.onclick = 
@@ -44,6 +47,7 @@ submitButton.addEventListener('click', function () {
           taskName:taskNameValue,
           datepicker:taskDateValue,
           taskDescription:taskDescriptionValue,
+          status:'To do',
       }
 
       let tasksListArr = JSON.parse(localStorage.getItem("tasksList")) || [];
@@ -110,30 +114,45 @@ function rendertasksList() {
   // handleDeleteTask();
   const tasksList = JSON.parse(localStorage.getItem('tasksList'));
   console.log(tasksList);
+
+  const reviewContainer = document.querySelector('#todo-cards');
+  reviewContainer.textContent = '';
+
   for (let tasksList_i of tasksList) {
     const taskCard = document.createElement('div');
     const taskNameCard = document.createElement('h3');
-    const taskDateCard = document.createElement('p');
-    const taskDescriptionCard = document.createElement('p');
-    
-    taskCard.setAttribute('class', 'draggable card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
-    
-    taskNameCard.setAttribute('class', 'content mx-5');
+    // taskCard.setAttribute('class', 'draggable card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
+
+    taskCard.setAttribute('class', 'draggable card');
+    taskCard.setAttribute('style', 'width: 28rem');
+    taskNameCard.setAttribute('class', 'card-header');
     taskNameCard.textContent = tasksList_i.taskName;
     
+    const taskDateCard = document.createElement('p');
+    const taskDescriptionCard = document.createElement('p');
     taskDateCard.setAttribute('class', 'content mx-4');
     taskDateCard.textContent = tasksList_i.datepicker;
     
     taskDescriptionCard.setAttribute('class', 'content mx-4');
     taskDescriptionCard.textContent = tasksList_i.taskDescription;
     
-    const reviewContainer = document.querySelector('#todo-cards');
+    // const reviewContainer = document.querySelector('#todo-cards');
+    // reviewContainer.textContent = '';
+
     taskCard.appendChild(taskNameCard);
     taskCard.appendChild(taskDateCard);
     taskCard.appendChild(taskDescriptionCard);
     reviewContainer.appendChild(taskCard);
+    const now = dayjs().format('MM/DD/YYYY');
+    console.log(now);
+
+    if (tasksList_i.datepicker == now) {
+      taskCard.classList.add('bg-warning');
+    } 
+
   }
 }
+
 
 // Todo: create a function to handle adding a new task
 
@@ -181,7 +200,15 @@ function rendertasksList() {
             // // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
         $(document).ready(function () {
           rendertasksList();
-          $(".draggable").draggable();
+          $(".draggable").draggable({
+            zIndex:100
           });
-
+          $(".lane").droppable({
+            accept: '.draggable',
+            drop: function( event, ui ) {
+              console.log(ui.draggable)
+              console.log(event.target)
+            }
+          });
+        });
 // taskEl.on('submit', handleFormSubmit);
