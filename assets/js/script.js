@@ -123,15 +123,16 @@ function rendertasksList() {
     const taskNameCard = document.createElement('h3');
     // taskCard.setAttribute('class', 'draggable card is-flex is-flex-direction-column tasksInputs-entry m-3 has-background-primary-soft p-3');
 
-    taskCard.setAttribute('class', 'draggable card');
+    taskCard.setAttribute('class', 'draggable card m-2');
     taskCard.setAttribute('style', 'width: 28rem');
     taskNameCard.setAttribute('class', 'card-header');
     taskNameCard.textContent = tasksList_i.taskName;
     
     const taskDateCard = document.createElement('p');
     const taskDescriptionCard = document.createElement('p');
+    const dateCardValue = tasksList_i.datepicker;
     taskDateCard.setAttribute('class', 'content mx-4');
-    taskDateCard.textContent = tasksList_i.datepicker;
+    taskDateCard.textContent = dateCardValue;
     
     taskDescriptionCard.setAttribute('class', 'content mx-4');
     taskDescriptionCard.textContent = tasksList_i.taskDescription;
@@ -144,11 +145,17 @@ function rendertasksList() {
     taskCard.appendChild(taskDescriptionCard);
     reviewContainer.appendChild(taskCard);
     const now = dayjs().format('MM/DD/YYYY');
-    console.log(now);
+    if (now > dateCardValue) {
+      taskCard.classList.add('bg-danger');
+      } else if (now === dateCardValue) {
+        taskCard.classList.add('bg-warning');
+      }
 
-    if (tasksList_i.datepicker == now) {
-      taskCard.classList.add('bg-warning');
-    } 
+    // console.log(now);
+
+    // if (tasksList_i.datepicker == now) {
+    //   taskCard.classList.add('bg-warning');
+    // }
 
   }
 }
@@ -201,13 +208,14 @@ function rendertasksList() {
         $(document).ready(function () {
           rendertasksList();
           $(".draggable").draggable({
-            zIndex:100
+            zIndex:10000
           });
           $(".lane").droppable({
             accept: '.draggable',
             drop: function( event, ui ) {
-              console.log(ui.draggable)
+              console.log(ui)
               console.log(event.target)
+          $( this ).children().eq(1).children().append(droppedCard);
             }
           });
         });
